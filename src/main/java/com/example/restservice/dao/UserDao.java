@@ -5,8 +5,9 @@ import com.example.restservice.models.User;
 import java.util.List;
 
 public interface UserDao {
-    public List<User> getUsers();
-    public User getUser(int id);;
-    public void updateUser(User user);
-    public void deleteUser(int id);
+    List<User> getUsers();
+    User getUser(int id);;
+    void updateUser(User user);
+    void deleteUser(int id);
+    void createUser(User user);
 }

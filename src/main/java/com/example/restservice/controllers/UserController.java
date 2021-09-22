@@ -3,15 +3,13 @@ package com.example.restservice.controllers;
 import com.example.restservice.dao.UserDao;
 import com.example.restservice.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
 @RestController
 public class UserController {
+
     @Autowired
     UserDao userDao;
 
@@ -26,17 +24,17 @@ public class UserController {
     }
 
     @RequestMapping(value = "api/users",method = RequestMethod.POST)
-    public void createUser(){
-
+    public void createUser(@RequestBody User user){
+        userDao.createUser(user);
     }
 
     @RequestMapping(value = "api/users/{id}",method = RequestMethod.DELETE)
-    public void deleteUser(){
-
+    public void deleteUser(@PathVariable int id){
+        userDao.deleteUser(id);
     }
 
     @RequestMapping(value = "api/users",method = RequestMethod.PUT)
-    public void updateUser(){
+    public void updateUser(@RequestBody User user){
 
     }
 }
