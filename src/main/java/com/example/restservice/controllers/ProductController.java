@@ -8,11 +8,11 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class ProductController {
 
     @Autowired
     ProductDao productDao;
-
 
     @RequestMapping(value = "api/products/{id}",method = RequestMethod.GET)
     public Product getProduct(@PathVariable int id){

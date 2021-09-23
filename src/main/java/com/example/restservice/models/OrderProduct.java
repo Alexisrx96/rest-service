@@ -7,6 +7,7 @@ import javax.persistence.Table;
 @Table(name = "order_product")
 @Entity
 public class OrderProduct {
+
     @EmbeddedId
     private OrderProductId id;
 
