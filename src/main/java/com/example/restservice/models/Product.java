@@ -1,5 +1,4 @@
 package com.example.restservice.models;
-
 import javax.persistence.*;
 
 @Table(name = "product")
