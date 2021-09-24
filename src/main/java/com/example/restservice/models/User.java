@@ -1,9 +1,12 @@
 package com.example.restservice.models;
 
+import lombok.ToString;
+
 import javax.persistence.*;
 
 @Table(name = "user")
 @Entity
+@ToString
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

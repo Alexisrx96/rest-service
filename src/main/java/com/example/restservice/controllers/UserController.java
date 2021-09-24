@@ -14,8 +14,8 @@ public class UserController {
     UserDao userDao;
 
     @RequestMapping(value = "api/users/{id}",method = RequestMethod.GET)
-    public User getUser(@PathVariable int id){
-        return userDao.getUser(id);
+    public User getUserById(@PathVariable int id){
+        return userDao.getUserById(id);
     }
 
     @RequestMapping(value = "api/users",method = RequestMethod.GET)
@@ -36,5 +36,10 @@ public class UserController {
     @RequestMapping(value = "api/users",method = RequestMethod.PUT)
     public void updateUser(@RequestBody User user){
 
+    }
+
+    @RequestMapping(value = "api/users/{email}",method = RequestMethod.GET)
+    public User getUserByEmail(@PathVariable String email){
+        return userDao.getUserByEmail(email);
     }
 }

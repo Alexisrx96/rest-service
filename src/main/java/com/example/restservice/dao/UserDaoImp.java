@@ -22,7 +22,7 @@ public class UserDaoImp implements UserDao {
     }
 
     @Override
-    public User getUser(int id) {
+    public User getUserById(int id) {
         String query = String.format("FROM User U WHERE U.id = %d", id);
         return (User) entityManager.createQuery(query).getSingleResult();
     }
@@ -41,6 +41,12 @@ public class UserDaoImp implements UserDao {
     @Override
     public void createUser(User user) {
         entityManager.merge(user);
+    }
+
+    @Override
+    public User getUserByEmail(String email) {
+        String query = String.format("FROM User U WHERE U.email like '%s'", email);
+        return (User) entityManager.createQuery(query).getSingleResult();
     }
 
 }
