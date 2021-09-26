@@ -1,7 +1,9 @@
-package com.example.restservice.security;
+package com.example.restservice.services;
 
 import com.example.restservice.dao.UserDao;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -18,8 +20,9 @@ public class MyUserDetailsService implements UserDetailsService {
     UserDao userDao;
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
-        //User u = userDao.getUserByEmail(s);
-        //return new MyUserDetails(u);
-        return new User("foo","foo", new ArrayList<>());
+        var u = userDao.getUserByEmail(s);
+        var grantedAuthorities = new ArrayList<GrantedAuthority>();
+        grantedAuthorities.add(new SimpleGrantedAuthority(u.getIdRol().getRol()));
+        return new User(u.getEmail(),u.getPassword(), grantedAuthorities);
     }
 }

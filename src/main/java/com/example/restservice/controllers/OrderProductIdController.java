@@ -1,9 +1,7 @@
 package com.example.restservice.controllers;
 
-import com.example.restservice.dao.GeneratePDF;
-import com.example.restservice.dao.OrderProductDao;
+import com.example.restservice.services.GeneratePDF;
 import com.example.restservice.dao.OrderProductIdDao;
-import com.example.restservice.models.OrderProduct;
 import com.example.restservice.models.OrderProductId;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +12,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.ByteArrayInputStream;
-import java.io.ByteArrayOutputStream;
 import java.util.List;
 
 @RestController

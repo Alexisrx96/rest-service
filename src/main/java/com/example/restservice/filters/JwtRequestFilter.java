@@ -1,6 +1,6 @@
 package com.example.restservice.filters;
 
-import com.example.restservice.security.MyUserDetailsService;
+import com.example.restservice.services.MyUserDetailsService;
 import com.example.restservice.util.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;

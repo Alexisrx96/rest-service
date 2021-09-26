@@ -1,4 +1,4 @@
-package com.example.restservice.dao;
+package com.example.restservice.services;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.FileSystemResource;
@@ -10,9 +10,8 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.io.File;
 
-@Service
 public class EmailSenderServices {
-
+/*
     @Autowired
     private JavaMailSender mailSender;
 
@@ -29,5 +28,5 @@ public class EmailSenderServices {
         messageHelper.addAttachment(fileSystem.getFilename(),fileSystem);
         mailSender.send(mimeMessage);
 
-    }
+    }*/
 }

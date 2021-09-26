@@ -17,14 +17,20 @@ USE `delivery` ;
 -- -----------------------------------------------------
 -- Table `delivery`.`order`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `delivery`.`order` (
+CREATE TABLE IF NOT EXISTS `delivery`.`orders` (
   `id_order` INT(11) NOT NULL AUTO_INCREMENT,
-  `fecha` VARCHAR(45) NULL DEFAULT NULL,
-  `estado` VARCHAR(45) NULL DEFAULT NULL,
+  `orders_date` VARCHAR(45) NULL DEFAULT NULL,
+  `orders_status` VARCHAR(45) NULL DEFAULT NULL,
+  `orders_delivaddress` VARCHAR(80) NULL DEFAULT NULL,
+  `id_product` INT NULL DEFAULT NULL,
+  `product_quantity` INT NULL DEFAULT NULL,
+  `product_price` FLOAT NULL DEFAULT NULL,
+  `id_payment` INT NULL DEFAULT NULL,
+  `id_user` INT NULL DEFAULT NULL,
   PRIMARY KEY (`id_order`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
-
+INSERT INTO orders(orders_date, orders_status, orders_delivaddress, id_product, product_quantity, product_price, id_payment, id_user) VALUES('24/09/2021', 'ON KITCHEN', 'LA CAMPANERA, SOYAPANGO',1, 2,5.99,3,1), ('23/09/2021', 'ON KITCHEN', 'COMUNIDAD 22 DE ABRIL',2, 2,8.99,2,1);
 
 -- -----------------------------------------------------
 -- Table `delivery`.`payment_type`
@@ -36,6 +42,7 @@ CREATE TABLE IF NOT EXISTS `delivery`.`payment_type` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
+INSERT INTO payment_type(payment_type) VALUES('CASH'), ('CREDIT CARD'), ('CRYPTO');
 
 -- -----------------------------------------------------
 -- Table `delivery`.`roles`
@@ -53,10 +60,10 @@ DEFAULT CHARACTER SET = utf8;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `delivery`.`user` (
   `id_user` INT(11) NOT NULL AUTO_INCREMENT,
-  `first name` VARCHAR(45) NULL DEFAULT NULL,
-  `last name` VARCHAR(45) NULL DEFAULT NULL,
-  `email` VARCHAR(45) NULL DEFAULT NULL,
-  `password` VARCHAR(45) NULL DEFAULT NULL,
+  `first_name` VARCHAR(45) NULL DEFAULT NULL,
+  `last_name` VARCHAR(45) NULL DEFAULT NULL,
+  `email` VARCHAR(45) NOT NULL UNIQUE,
+  `password` VARCHAR(300) NULL DEFAULT NULL,
   `direccion` TEXT NULL DEFAULT NULL,
   `id_rol` INT(11) NOT NULL,
   PRIMARY KEY (`id_user`),
@@ -86,7 +93,7 @@ CREATE TABLE IF NOT EXISTS `delivery`.`invoice` (
   INDEX `fk_Invoice_User1_idx` (`id_user` ASC),
   CONSTRAINT `fk_Invoice_Order1`
     FOREIGN KEY (`id_order`)
-    REFERENCES `delivery`.`order` (`id_order`)
+    REFERENCES `delivery`.`orders` (`id_order`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Invoice_Payment_Type1`
@@ -114,6 +121,8 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
 
+INSERT INTO product_type(type) VALUES('MEXICAN FOOD'), ('ITALIAN FOOD'), ('ALCOHOLIC BEVERAGES');
+
 -- -----------------------------------------------------
 -- Table `delivery`.`product`
 -- -----------------------------------------------------
@@ -132,7 +141,7 @@ CREATE TABLE IF NOT EXISTS `delivery`.`product` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8;
 
-
+INSERT INTO product(name, price, id_product_type) VALUES('Burrito Medium',5.99,1), ('Alfredo Pasta',8.99,2), ('Italian Soda',2.99,3);
 -- -----------------------------------------------------
 -- Table `delivery`.`order_product`
 -- -----------------------------------------------------
@@ -144,7 +153,7 @@ CREATE TABLE IF NOT EXISTS `delivery`.`order_product` (
   INDEX `fk_Order_has_Product_Order1_idx` (`id_order` ASC),
   CONSTRAINT `fk_Order_has_Product_Order1`
     FOREIGN KEY (`id_order`)
-    REFERENCES `delivery`.`order` (`id_order`)
+    REFERENCES `delivery`.`orders` (`id_order`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
   CONSTRAINT `fk_Order_has_Product_Product1`
