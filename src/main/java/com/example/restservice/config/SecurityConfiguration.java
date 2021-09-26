@@ -1,4 +1,4 @@
-package com.example.restservice.security;
+package com.example.restservice.config;
 
 import com.example.restservice.filters.JwtRequestFilter;
 import com.example.restservice.services.MyUserDetailsService;
@@ -33,8 +33,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().disable()
-                .authorizeRequests().antMatchers("/authenticate").permitAll()
-                .antMatchers("/**").hasRole("Admin")
+                .authorizeRequests().antMatchers(
+                        "/authenticate",
+                        "/swagger-ui.html",
+                        "/swagger-resources/**",
+                        "/v2/**",
+                        "/csrf/**",
+                        "/webjars/**"
+                ).permitAll()
+                .antMatchers("api/**").hasRole("Admin")
                 .antMatchers(HttpMethod.GET,"api/products").hasAnyRole("Customer","Admin")
                 .antMatchers("api/orders").hasAnyRole("Customer","Admin")
                 .anyRequest().authenticated()
