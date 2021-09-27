@@ -73,8 +73,8 @@ public class OrderDaoImp implements OrderDao{
         for (Order order:orders){
             row = sheet.createRow(initRow);
             row.createCell(0).setCellValue(order.getId());
-            row.createCell(1).setCellValue(order.getFecha());
-            row.createCell(2).setCellValue(order.getEstado());
+            row.createCell(1).setCellValue(order.getOrdersDate());
+            row.createCell(2).setCellValue(order.getOrdersStatus());
 
             initRow++;
         }
