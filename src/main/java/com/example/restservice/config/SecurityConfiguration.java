@@ -32,7 +32,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.csrf().disable()
+        http.cors().and().csrf().disable()
                 .authorizeRequests()
                 .antMatchers(
                         "/authenticate",
@@ -40,10 +40,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                         "/swagger-resources/**",
                         "/v2/**",
                         "/csrf/**",
-                        "/webjars/**"
+                        "/webjars/**",
+                        "/create-account"
                 ).permitAll()
                 .antMatchers(HttpMethod.GET,"/api/products","/api/products/**").permitAll()
-                .antMatchers("/api/**").hasRole("Admin")
+                .antMatchers("/api/**","/create-admin").hasRole("Admin")
                 .antMatchers("/api/orders").hasAnyRole("Customer","Admin")
                 .anyRequest().authenticated()
                 .and().sessionManagement()

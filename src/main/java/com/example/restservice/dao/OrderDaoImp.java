@@ -1,6 +1,9 @@
 package com.example.restservice.dao;
 
 import com.example.restservice.models.Order;
+import com.example.restservice.models.OrderProduct;
+import com.example.restservice.models.OrderProductId;
+import com.example.restservice.models.OrderWrapper;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
@@ -49,9 +52,34 @@ public class OrderDaoImp implements OrderDao{
 
     @Override
     public void createOrder(Order order) {
-        entityManager.merge(order);
+        entityManager.persist(order);
     }
 
+    @Override
+    public void submitOrder(OrderWrapper orderWrapper) {
+        entityManager.getTransaction().begin();
+        Order order = new Order();
+        order.setOrdersDate(orderWrapper.getOrdersDate());
+        order.setOrdersStatus(orderWrapper.getOrdersStatus());
+        order.setOrdersDelivaddress(orderWrapper.getOrdersDelivaddress());
+        order.setIdPayment(orderWrapper.getIdPayment());
+        order.setIdUser(orderWrapper.getIdUser());
+        entityManager.persist(order);
+        int idOrder = order.getId();
+        for (var productWrapper: orderWrapper.getProductWrappers()) {
+            OrderProductId id = new OrderProductId();
+            id.setIdOrder(idOrder);
+            id.setIdProduct(productWrapper.getIdProduct());
+            OrderProduct orderProduct = new OrderProduct();
+            orderProduct.setId(id);
+            orderProduct.setProductPrice(productWrapper.getProductPrice());
+            orderProduct.setProductQuantity(productWrapper.getProductQuantity());
+            entityManager.persist(orderProduct);
+        }
+        entityManager.getTransaction().commit();
+    }
+
+    /*
     @Override
     public ByteArrayInputStream exportOrders() throws IOException {
         String[] columns = {"id_order","fecha","estado"};
@@ -84,6 +112,6 @@ public class OrderDaoImp implements OrderDao{
 
         return new ByteArrayInputStream(stream.toByteArray());
     }
-
+*/
 
 }

@@ -29,7 +29,7 @@ public class OrderProductDaoImpl implements OrderProductDao{
 
     @Override
     public void createOrderProduct(OrderProduct orderProduct) {
-        entityManager.merge(orderProduct);
+        entityManager.persist(orderProduct);
     }
 
     @Override

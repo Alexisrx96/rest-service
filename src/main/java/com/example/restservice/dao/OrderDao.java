@@ -1,6 +1,7 @@
 package com.example.restservice.dao;
 
 import com.example.restservice.models.Order;
+import com.example.restservice.models.OrderWrapper;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -13,8 +14,9 @@ public interface OrderDao {
     void updateOrder(Order order);
     void deleteOrder(int id);
     void createOrder(Order order);
+    void submitOrder(OrderWrapper orderWrapper);
 
     //export of orders to excel
-    ByteArrayInputStream exportOrders() throws IOException;
+    //ByteArrayInputStream exportOrders() throws IOException;
 
 }
