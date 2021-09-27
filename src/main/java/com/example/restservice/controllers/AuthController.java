@@ -11,12 +11,10 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin(origins = "*")
 public class AuthController {
     @Autowired
     AuthenticationManager authenticationManager;
@@ -38,15 +36,5 @@ public class AuthController {
         final UserDetails userDetails = userDetailsService.loadUserByUsername(authRequest.getUsername());
         final String jwt = jwtTokenUtil.generateToken(userDetails);
         return ResponseEntity.ok(new AuthenticationResponse(jwt));
-    }
-
-    @RequestMapping(value = "/admin",method = RequestMethod.GET)
-    public String admin(){
-        return "Welcome ADMIN";
-    }
-
-    @RequestMapping(value = "/customer",method = RequestMethod.GET)
-    public String customer(){
-        return "Welcome Customer";
     }
 }
