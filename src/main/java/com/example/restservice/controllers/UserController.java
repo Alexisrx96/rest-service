@@ -1,6 +1,8 @@
 package com.example.restservice.controllers;
 
+import com.example.restservice.dao.RoleDao;
 import com.example.restservice.dao.UserDao;
+import com.example.restservice.models.NewUserCreated;
 import com.example.restservice.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -15,6 +17,8 @@ public class UserController {
     @Autowired
     UserDao userDao;
     @Autowired
+    RoleDao roleDao;
+    @Autowired
     BCryptPasswordEncoder encoder;
 
     @RequestMapping(value = "api/users/{id}",method = RequestMethod.GET)
@@ -27,9 +31,29 @@ public class UserController {
         return userDao.getUsers();
     }
 
-    @RequestMapping(value = "api/users",method = RequestMethod.POST)
-    public void createUser(@RequestBody User user){
-        user.setPassword(encoder.encode(user.getPassword()));
+    @RequestMapping(value = "create-account",method = RequestMethod.POST)
+    public void createAccount(@RequestBody NewUserCreated newUserCreated){
+
+        User user = new User();
+        user.setPassword(encoder.encode(newUserCreated.getPassword()));
+        user.setDireccion(newUserCreated.getDirection());
+        user.setEmail(newUserCreated.getUsername());
+        user.setFirstName(newUserCreated.getFirstName());
+        user.setLastName(newUserCreated.getLastName());
+        user.setIdRol(roleDao.getRole(2));
+        userDao.createUser(user);
+    }
+
+    @RequestMapping(value = "create-admin",method = RequestMethod.POST)
+    public void createAdmin(@RequestBody NewUserCreated newUserCreated){
+
+        User user = new User();
+        user.setPassword(encoder.encode(newUserCreated.getPassword()));
+        user.setDireccion(newUserCreated.getDirection());
+        user.setEmail(newUserCreated.getUsername());
+        user.setFirstName(newUserCreated.getFirstName());
+        user.setLastName(newUserCreated.getLastName());
+        user.setIdRol(roleDao.getRole(1));
         userDao.createUser(user);
     }
 
