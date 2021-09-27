@@ -14,7 +14,8 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-public class OrderController {
+@CrossOrigin("*")
+public class  OrderController {
 
     @Autowired
     OrderDao orderDao;
