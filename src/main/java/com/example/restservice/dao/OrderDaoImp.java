@@ -57,7 +57,6 @@ public class OrderDaoImp implements OrderDao{
 
     @Override
     public void submitOrder(OrderWrapper orderWrapper) {
-        entityManager.getTransaction().begin();
         Order order = new Order();
         order.setOrdersDate(orderWrapper.getOrdersDate());
         order.setOrdersStatus(orderWrapper.getOrdersStatus());
@@ -76,7 +75,6 @@ public class OrderDaoImp implements OrderDao{
             orderProduct.setProductQuantity(productWrapper.getProductQuantity());
             entityManager.persist(orderProduct);
         }
-        entityManager.getTransaction().commit();
     }
 
     /*
